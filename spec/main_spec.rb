@@ -1,7 +1,11 @@
 describe 'database' do
+  before do
+    `rm -rf test.db`
+  end
+
   def run_script(commands)
     raw_output = nil
-    IO.popen("./cuteDB", "r+") do |pipe|
+    IO.popen("./cuteDB test.db", "r+") do |pipe|
       commands.each do |command|
         pipe.puts command
       end
@@ -12,6 +16,27 @@ describe 'database' do
       raw_output = pipe.gets(nil)
     end
     raw_output.split("\n")
+  end
+
+  it 'keeps data after closing connection' do
+    result1 = run_script([
+      "insert 1 user1 person1@example.com",
+      ".exit",
+    ])
+    expect(result1).to match_array([
+      "cuteDB > Executed.",
+      "cuteDB > ",
+    ])
+
+    result2 = run_script([
+      "select",
+      ".exit",
+    ])
+    expect(result2).to match_array([
+      "cuteDB > (1, user1, person1@example.com)",
+      "Executed.",
+      "cuteDB > ",
+    ])
   end
 
   it 'inserts and retreives a row' do

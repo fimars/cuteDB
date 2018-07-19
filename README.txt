@@ -1,14 +1,14 @@
 CuteDB - A tiny db for learn
 
 ## Run
-./cuteDB
+./cuteDB dbname.db
 
 ## COMMANDS
 
-> INSERT 1 username email@host.cc
+> insert 1 username email@host.cc
 ;INSERT A ROW
 
-> SELECT
+> select
 ;Get Result
 
 ## META COMMANDS
