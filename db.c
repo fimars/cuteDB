@@ -26,7 +26,8 @@ void read_input(InputBuffer *input_buffer)
 {
   ssize_t bytes_read = getline(&(input_buffer->buffer), &(input_buffer->buffer_length), stdin);
 
-  if (bytes_read <= 0) {
+  if (bytes_read <= 0)
+  {
     printf("Error reading input\n");
     exit(EXIT_FAILURE);
   }
@@ -34,6 +35,12 @@ void read_input(InputBuffer *input_buffer)
   input_buffer->input_length = bytes_read - 1;
   input_buffer->buffer[bytes_read - 1] = 0;
   printf("after: %s", input_buffer->buffer);
+}
+
+void close_input_buffer(InputBuffer *input_buffer)
+{
+  free(input_buffer->buffer);
+  free(input_buffer);
 }
 
 int main(int argc, char *argv[])
@@ -46,6 +53,7 @@ int main(int argc, char *argv[])
 
     if (strcmp(input_buffer->buffer, ".exit") == 0)
     {
+      close_input_buffer(input_buffer);
       exit(EXIT_SUCCESS);
     }
     else
