@@ -107,7 +107,7 @@ void close_input_buffer(InputBuffer *input_buffer)
 }
 
 // Guide
-void print_prompt() { printf("db > "); }
+void print_prompt() { printf("cuteDB > "); }
 
 void print_row(Row *row)
 {
